@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #define MAX_ESTADOS 8
 #define MAX_CIDADES 4
 #define MAX_CARTAS (MAX_ESTADOS * MAX_CIDADES) // Limites de estados, cidades e cartas.
