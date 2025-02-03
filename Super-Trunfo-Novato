@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_ESTADOS 8
+#define MAX_CIDADES 4
+#define MAX_CARTAS (MAX_ESTADOS * MAX_CIDADES) // Limites de estados, cidades e cartas.
+
+typedef struct {
+    char codigo[4];
+    int populacao;
+    int area;
+    int pib;
+    int pontosTuristicos;
+} Carta; // Estrutura das cartas.
+
+void cadastrarCartas(Carta cartas[], int *quantidade) {
+    const char estados[] = "ABCDEFGH";
+    for (int i = 0; i < MAX_ESTADOS && *quantidade < MAX_CARTAS; i++) {
+        for (int j = 0; j < MAX_CIDADES && *quantidade < MAX_CARTAS; j++) {
+            snprintf(cartas[*quantidade].codigo, sizeof(cartas[*quantidade].codigo), "%c%02d", estados[i], j + 1);
+            printf("\nCadastro da carta %s:\nPopulação (em milhares): ", cartas[*quantidade].codigo);
+            scanf("%d", &cartas[*quantidade].populacao);
+            printf("Área (em km²): ");
+            scanf("%d", &cartas[*quantidade].area);
+            printf("PIB (em milhões de dólares): ");
+            scanf("%d", &cartas[*quantidade].pib);
+            printf("Número de pontos turísticos: ");
+            scanf("%d", &cartas[*quantidade].pontosTuristicos);
+            (*quantidade)++;
+        }
+    }
+}
+
+void exibirCartas(Carta cartas[], int quantidade) {
+    for (int i = 0; i < quantidade; i++) {
+        printf("\nCarta %s:\nPopulação: %d mil\nÁrea: %d km²\nPIB: %d milhões de dólares\nPontos turísticos: %d\n",
+               cartas[i].codigo, cartas[i].populacao, cartas[i].area, cartas[i].pib, cartas[i].pontosTuristicos);
+    }
+}
+
+void compararCartas(Carta a, Carta b) {
+    printf("\nComparação entre %s e %s:\n", a.codigo, b.codigo);
+    
+    if (a.populacao > b.populacao) {
+        printf("População: %s tem mais habitantes.\n", a.codigo);
+    } else {
+        printf("População: %s tem mais habitantes.\n", b.codigo);
+    }
+
+    if (a.area > b.area) {
+        printf("Área: %s tem maior território.\n", a.codigo);
+    } else {
+        printf("Área: %s tem maior território.\n", b.codigo);
+    }
+
+    if (a.pib > b.pib) {
+        printf("PIB: %s tem maior economia.\n", a.codigo);
+    } else {
+        printf("PIB: %s tem maior economia.\n", b.codigo);
+    }
+
+    if (a.pontosTuristicos > b.pontosTuristicos) {
+        printf("Pontos Turísticos: %s tem mais atrações.\n", a.codigo);
+    } else {
+        printf("Pontos Turísticos: %s tem mais atrações.\n", b.codigo);
+    }
+}
+
+int main() {
+    Carta cartas[MAX_CARTAS];
+    int quantidade = 0;
+
+    printf("Desafio de criar um sistema de cadastrar cartas Super Triunfo!\n");
+    cadastrarCartas(cartas, &quantidade);
+    exibirCartas(cartas, quantidade);
+
+    if (quantidade >= 2) {
+        compararCartas(cartas[0], cartas[1]); // Comparando as duas primeiras cartas cadastradas
+    } else {
+        printf("Não há cartas suficientes para comparar.\n");
+    }
+
+    return 0;
+}
